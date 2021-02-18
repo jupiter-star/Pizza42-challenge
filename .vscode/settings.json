@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/b46f6d01-b697-4128-b3de-ebedb36f4bb1/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/pizza42-challenge",
+    "appService.deploySubpath": "."
+}
