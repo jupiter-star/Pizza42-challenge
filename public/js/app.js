@@ -73,14 +73,22 @@ const requireAuth = async (fn, targetUrl) => {
 /**
  * Calls the API endpoint with an authorization token
  */
-const callApi = async () => {
+const callApi = async (pizzaName) => {
   try {
     const token = await auth0.getTokenSilently();
 
+    
+    var pizzaOrder = {
+      pizzaName: pizzaName
+    }
+    //const response = await fetch("https://localhost:44348/weatherforecast", {
     const response = await fetch("/api/external", {
+      method: 'POST',
       headers: {
-        Authorization: `Bearer ${token}`
-      }
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(pizzaOrder)
     });
 
     const responseData = await response.json();
@@ -117,9 +125,13 @@ window.onload = async () => {
         e.preventDefault();
         window.history.pushState({ url }, {}, url);
       }
-    } else if (e.target.getAttribute("id") === "call-api") {
+    } else if (e.target.getAttribute("id") === "order-cheese-pizza") {
       e.preventDefault();
-      callApi();
+      callApi("order-cheese-pizza");
+    }
+    else if (e.target.getAttribute("id") === "order-pepperoni-pizza") {
+      e.preventDefault();
+      callApi("order-pepperoni-pizza");
     }
   });
 

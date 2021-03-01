@@ -5,8 +5,9 @@ const jwt = require("express-jwt");
 const jwksRsa = require("jwks-rsa");
 const { join } = require("path");
 const authConfig = require("./auth_config.json");
-
+const autho0Mgmt = require("./management.js")
 const app = express();
+app.use(express.json())
 
 if (!authConfig.domain || !authConfig.audience) {
   throw "Please make sure that auth_config.json is in place and populated";
@@ -28,19 +29,24 @@ const checkJwt = jwt({
   issuer: `https://${authConfig.domain}/`,
   algorithms: ["RS256"]
 });
-//external endpoint
-app.get("/api/external", checkJwt, (req, res) => {
-    // save the order to your user's profile  
-    if (!req.user['https://example.com/verified']) {
-        res.send({
-            msg: "Please Verify your email before placing an order"
-        });
-    } else {
-        res.send({
-            msg: "Thanks for ordering Pizza 42"
-        });
-    }
 
+app.post("/api/external", checkJwt, (req, res) => {
+  var userId = req.user['sub'];
+ // check weather loged in user has email varified or not.
+   if (!req.user['https://api.pizza42.com/verified']) {
+     res.send({
+         msg: "Please Verify your email before placing an order"         
+
+     });
+   }
+  // Update the user metadata with the ordered pizza name.
+ else{
+  autho0Mgmt.updateUserMetadata(userId, req.body.pizzaName);
+  res.send({
+    msg: "Thank you For Ordering with Pizza42!"
+  });
+ }
+  
 });
 
 app.get("/auth_config.json", (req, res) => {

@@ -23,7 +23,7 @@ const eachElement = (selector, fn) => {
   }
 };
 
-/* *
+/**
  * Tries to display a content panel that is referenced
  * by the specified route URL. These are matched using the
  * router, defined above.

@@ -1,5 +1,5 @@
 {
-  "domain": "<Update with your domain from AUth0settings>",
-  "clientId": "<Update it with your Client ID from Auth0 settings>",
-  "audience": "<Update the URL from your Auth0 setting>"
+  "domain": "<your auth0 domain>",
+  "clientId": "<your app clientId>",
+  "audience": "<your app audience>"
 }
